@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import Head from "next/head";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -17,7 +17,9 @@ export default function NFCBusinessCard() {
     link: "",
     avatar: null,
   });
-  const [generatedLink, setGeneratedLink] = useState(null);
+  const [generatedLink, setGeneratedLink] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     if (session) {
@@ -30,24 +32,38 @@ export default function NFCBusinessCard() {
     }
   }, [session]);
 
-  const handleChange = (e) => {
+  const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
-  };
+  }, []);
 
-  const handleAvatarChange = (e) => {
-    const file = e.target.files[0];
+  const handleAvatarChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
     if (file) {
       const reader = new FileReader();
-      reader.onloadend = () => setFormData((prev) => ({ ...prev, avatar: reader.result }));
+      reader.onloadend = () => setFormData((prev) => ({ ...prev, avatar: reader.result as string }));
+      reader.onerror = () => setError("Ошибка загрузки изображения");
       reader.readAsDataURL(file);
     }
+  }, []);
+
+  const validateForm = () => {
+    if (!formData.name || !formData.email || !formData.phone || !formData.link) {
+      setError("Все поля должны быть заполнены");
+      return false;
+    }
+    setError(null);
+    return true;
   };
 
-  const handleGenerateLink = () => {
+  const handleGenerateLink = useCallback(() => {
+    if (!validateForm()) return;
+
+    setLoading(true);
     const uniqueId = crypto.randomUUID();
     setGeneratedLink(`${window.location.origin}/profile/${uniqueId}`);
-  };
+    setLoading(false);
+  }, [formData]);
 
   return (
     <>
@@ -90,7 +106,10 @@ export default function NFCBusinessCard() {
                 <Input placeholder="Email" name="email" value={formData.email} disabled />
                 <Input placeholder="Телефон" name="phone" value={formData.phone} onChange={handleChange} />
                 <Input placeholder="Сайт или соцсеть" name="link" value={formData.link} onChange={handleChange} />
-                <Button onClick={handleGenerateLink} className="w-full">Создать ссылку</Button>
+                {error && <p className="text-red-500 text-center">{error}</p>}
+                <Button onClick={handleGenerateLink} className="w-full" disabled={loading}>
+                  {loading ? "Создание ссылки..." : "Создать ссылку"}
+                </Button>
                 {generatedLink && (
                   <div className="mt-4 text-center">
                     <p className="text-sm">Ссылка для записи на NFC-чип:</p>
