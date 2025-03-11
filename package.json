@@ -1,0 +1,43 @@
+{
+  "name": "nfc-business-card",
+  "version": "1.0.0",
+  "description": "Создайте цифровую NFC-визитку с уникальной ссылкой",
+  "main": "index.js",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "format": "prettier --write ."
+  },
+  "keywords": [],
+  "author": "Ваше Имя",
+  "license": "ISC",
+  "dependencies": {
+    "next": "^15.2.1",
+    "next-auth": "^4.24.11",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "sharp": "^0.33.5",
+    "tailwindcss": "^4.0.12",
+    "react-router-dom": "^6.13.0"
+  },
+  "devDependencies": {
+    "@types/node": "22.13.10",
+    "@types/react": "19.0.10",
+    "typescript": "5.8.2",
+    "eslint": "^8.0.0",
+    "eslint-config-next": "latest",
+    "prettier": "latest"
+  },
+  "eslintConfig": {
+    "extends": "next/core-web-vitals"
+  },
+  "prettier": {
+    "semi": false,
+    "singleQuote": true,
+    "trailingComma": "es5",
+    "printWidth": 80,
+    "tabWidth": 2
+  }
+}
