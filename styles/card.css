@@ -1,7 +1,0 @@
-.card {
-  @apply p-4 shadow-md rounded-lg bg-white;
-}
-
-.card-content {
-  @apply p-2;
-}

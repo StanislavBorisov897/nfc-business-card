@@ -1,7 +1,0 @@
-.input {
-  @apply w-full p-2 border rounded;
-}
-
-.input:disabled {
-  @apply bg-gray-200 cursor-not-allowed;
-}
