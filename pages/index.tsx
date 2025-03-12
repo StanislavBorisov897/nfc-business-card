@@ -99,8 +99,8 @@ export default function NFCBusinessCard() {
               <>
                 <Button onClick={() => signIn("google")} className="w-full">Войти через Google</Button>
                 <form>
-                  <Input placeholder="Email" name="email" value={formData.email} onChange={handleChange} required />
-                  <Input placeholder="Пароль" name="password" type="password" value={formData.password} onChange={handleChange} required />
+                  <Input placeholder="Email" name="email" value={formData.email} onChange={handleChange} />
+                  <Input placeholder="Пароль" name="password" type="password" value={formData.password} onChange={handleChange} />
                   <Button type="submit" className="w-full">Зарегистрироваться</Button>
                 </form>
               </>
