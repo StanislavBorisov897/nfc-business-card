@@ -79,9 +79,12 @@ export default function NFCBusinessCard() {
   }, [validateForm]);
 
   const handleRegister = useCallback(() => {
-    // Логика регистрации
     console.log('Зарегистрироваться');
   }, []);
+
+  const navigateToLogin = () => {
+    router.push('/login');
+  };
 
   return (
     <>
@@ -103,6 +106,7 @@ export default function NFCBusinessCard() {
             ) : (
               <>
                 <Button onClick={() => signIn("google")} className="w-full">Войти через Google</Button>
+                <Button onClick={navigateToLogin} className="w-full">Войти</Button>
                 <form>
                   <Input placeholder="Email" name="email" value={formData.email} onChange={handleChange} />
                   <Input placeholder="Пароль" name="password" type="password" value={formData.password} onChange={handleChange} />
