@@ -119,7 +119,7 @@ export default function NFCBusinessCard() {
                 <form onSubmit={handleRegister}>
                   <Input placeholder="Email" name="email" value={formData.email} onChange={handleChange} />
                   <Input placeholder="Пароль" name="password" type="password" value={formData.password} onChange={handleChange} />
-                  <Button className="w-full" onClick={handleRegister}>Зарегистрироваться</Button>
+                  <Button className="w-full" type="submit">Зарегистрироваться</Button>
                 </form>
               </>
             )}
