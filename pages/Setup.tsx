@@ -1,12 +1,12 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/router';
 
 const Setup: React.FC = () => {
-  const navigate = useNavigate();
+  const router = useRouter();
 
   const handleSetupComplete = () => {
     alert('Setup complete');
-    navigate('/');
+    router.push('/');
   };
 
   return (
