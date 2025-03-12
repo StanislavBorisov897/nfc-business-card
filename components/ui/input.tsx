@@ -5,13 +5,14 @@ interface InputProps {
   name: string;
   value: string;
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  type?: string; // Добавлено свойство type
   disabled?: boolean;
 }
 
-export const Input: React.FC<InputProps> = ({ placeholder, name, value, onChange, disabled = false }) => {
+export const Input: React.FC<InputProps> = ({ placeholder, name, value, onChange, type = "text", disabled = false }) => {
   return (
     <input
-      type="text"
+      type={type} // Используем свойство type
       placeholder={placeholder}
       name={name}
       value={value}
