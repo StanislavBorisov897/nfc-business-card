@@ -101,67 +101,64 @@ export default function NFCBusinessCard() {
         <title>NFC Визитка</title>
         <meta name="description" content="Создайте цифровую NFC-визитку с уникальной ссылкой" />
       </Head>
-      <div
-        className="flex flex-col items-center justify-center min-h-screen p-4 bg-cover bg-center"
-        style={{ backgroundImage: 'url("https://779777.ru/")' }}
-      >
-        <h1 className="text-black text-5xl font-bold mb-8 text-center mt-8">Создание NFC-визитки</h1>
-        <div className="flex flex-col items-center justify-center flex-grow">
-          <Card className="w-full max-w-md shadow-lg rounded-lg bg-white">
-            <CardContent className="space-y-4 p-4">
-              {status === "authenticated" ? (
-                <>
-                  <p className="text-center">Вы вошли как {formData.email}</p>
-                  <Button onClick={() => signOut()} className="w-full">Выйти</Button>
-                </>
-              ) : (
-                <>
-                  <Button onClick={() => signIn("google")} className="w-full">Войти через Google</Button>
-                  <Button onClick={navigateToLogin} className="w-full">Войти</Button>
-                  <form onSubmit={handleRegister}>
-                    <Input placeholder="Email" name="email" value={formData.email} onChange={handleChange} />
-                    <Input placeholder="Пароль" name="password" type="password" value={formData.password} onChange={handleChange} />
-                    <Button className="w-full">Зарегистрироваться</Button>
-                  </form>
-                </>
-              )}
-              {status === "authenticated" && (
-                <>
-                  <div className="flex flex-col items-center">
-                    {formData.avatar ? (
-                      <Image src={formData.avatar} alt="Avatar" width={96} height={96} className="rounded-full object-cover" />
-                    ) : (
-                      <div className="w-24 h-24 rounded-full bg-gray-200 flex items-center justify-center">
-                        <span className="text-gray-500">Нет фото</span>
-                      </div>
-                    )}
-                    <input
-                      type="file"
-                      accept="image/*"
-                      onChange={handleAvatarChange}
-                      className="mt-2 text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none"
-                    />
-                  </div>
-                  <Input placeholder="Имя" name="name" value={formData.name} onChange={handleChange} />
-                  <Input placeholder="Телефон" name="phone" value={formData.phone} onChange={handleChange} />
-                  <Input placeholder="Сайт или соцсеть" name="link" value={formData.link} onChange={handleChange} />
-                  {error && <p className="text-red-500 text-center">{error}</p>}
-                  <Button onClick={handleGenerateLink} className="w-full" disabled={loading}>
-                    {loading ? "Создание ссылки..." : "Создать ссылку"}
-                  </Button>
-                  {generatedLink && (
-                    <div className="mt-4 text-center">
-                      <p className="text-sm">Ссылка для записи на NFC-чип:</p>
-                      <a href={generatedLink} target="_blank" rel="noopener noreferrer" className="text-blue-500 underline break-all">
-                        {generatedLink}
-                      </a>
+      <div className="flex flex-col items-center justify-center min-h-screen p-4 bg-gray-100">
+        <Card className="w-full max-w-md shadow-lg rounded-lg bg-white">
+          <CardContent className="space-y-4 p-4">
+            <h2 className="text-xl font-semibold text-center">
+              {status === "authenticated" ? "Личный кабинет" : "Создание NFC-визитки"}
+            </h2>
+            {status === "authenticated" ? (
+              <>
+                <p className="text-center">Вы вошли как {formData.email}</p>
+                <Button onClick={() => signOut()} className="w-full">Выйти</Button>
+              </>
+            ) : (
+              <>
+                <Button onClick={() => signIn("google")} className="w-full">Войти через Google</Button>
+                <Button onClick={navigateToLogin} className="w-full">Войти</Button>
+                <form onSubmit={handleRegister}>
+                  <Input placeholder="Email" name="email" value={formData.email} onChange={handleChange} />
+                  <Input placeholder="Пароль" name="password" type="password" value={formData.password} onChange={handleChange} />
+                  <Button className="w-full" onClick={handleRegister}>Зарегистрироваться</Button>
+                </form>
+              </>
+            )}
+            {status === "authenticated" && (
+              <>
+                <div className="flex flex-col items-center">
+                  {formData.avatar ? (
+                    <Image src={formData.avatar} alt="Avatar" width={96} height={96} className="rounded-full object-cover" />
+                  ) : (
+                    <div className="w-24 h-24 rounded-full bg-gray-200 flex items-center justify-center">
+                      <span className="text-gray-500">Нет фото</span>
                     </div>
                   )}
-                </>
-              )}
-            </CardContent>
-          </Card>
-        </div>
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={handleAvatarChange}
+                    className="mt-2 text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none"
+                  />
+                </div>
+                <Input placeholder="Имя" name="name" value={formData.name} onChange={handleChange} />
+                <Input placeholder="Телефон" name="phone" value={formData.phone} onChange={handleChange} />
+                <Input placeholder="Сайт или соцсеть" name="link" value={formData.link} onChange={handleChange} />
+                {error && <p className="text-red-500 text-center">{error}</p>}
+                <Button onClick={handleGenerateLink} className="w-full" disabled={loading}>
+                  {loading ? "Создание ссылки..." : "Создать ссылку"}
+                </Button>
+                {generatedLink && (
+                  <div className="mt-4 text-center">
+                    <p className="text-sm">Ссылка для записи на NFC-чип:</p>
+                    <a href={generatedLink} target="_blank" rel="noopener noreferrer" className="text-blue-500 underline break-all">
+                      {generatedLink}
+                    </a>
+                  </div>
+                )}
+              </>
+            )}
+          </CardContent>
+        </Card>
       </div>
     </>
   );
