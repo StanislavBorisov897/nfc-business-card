@@ -1,19 +1,19 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/router';
 import authService from '../services/authService';
 
 const RegisterForm: React.FC = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-  const navigate = useNavigate();
+  const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
       await authService.register(username, password);
       alert('Registration successful. Please check your email for confirmation.');
-      navigate('/login');
+      router.push('/login');
     } catch (err) {
       setError('Registration failed');
     }
