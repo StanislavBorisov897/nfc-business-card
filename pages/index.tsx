@@ -78,6 +78,11 @@ export default function NFCBusinessCard() {
     setLoading(false);
   }, [validateForm]);
 
+  const handleRegister = useCallback(() => {
+    // Логика регистрации
+    console.log('Зарегистрироваться');
+  }, []);
+
   return (
     <>
       <Head>
@@ -101,7 +106,7 @@ export default function NFCBusinessCard() {
                 <form>
                   <Input placeholder="Email" name="email" value={formData.email} onChange={handleChange} />
                   <Input placeholder="Пароль" name="password" type="password" value={formData.password} onChange={handleChange} />
-                  <Button className="w-full">Зарегистрироваться</Button>
+                  <Button onClick={handleRegister} className="w-full">Зарегистрироваться</Button>
                 </form>
               </>
             )}
