@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, ChangeEvent } from "react";
+import { useState, useEffect, useCallback, ChangeEvent, FormEvent } from "react";
 import Head from "next/head";
 import { Card, CardContent } from "../components/ui/card";
 import { Input } from "../components/ui/input";
@@ -6,7 +6,7 @@ import { Button } from "../components/ui/button";
 import { useRouter } from "next/router";
 import { signIn, signOut, useSession } from "next-auth/react";
 import Image from "next/image";
-import authService from '../services/authService'; // Импортируем authService
+import authService from '../services/authService';
 
 interface FormData {
   name: string;
@@ -79,7 +79,8 @@ export default function NFCBusinessCard() {
     setLoading(false);
   }, [validateForm]);
 
-  const handleRegister = useCallback(async () => {
+  const handleRegister = useCallback(async (e: FormEvent) => {
+    e.preventDefault();
     if (!validateForm()) return;
 
     try {
@@ -117,10 +118,10 @@ export default function NFCBusinessCard() {
                 <>
                   <Button onClick={() => signIn("google")} className="w-full">Войти через Google</Button>
                   <Button onClick={navigateToLogin} className="w-full">Войти</Button>
-                  <form onSubmit={(e) => { e.preventDefault(); handleRegister(); }}>
+                  <form onSubmit={handleRegister}>
                     <Input placeholder="Email" name="email" value={formData.email} onChange={handleChange} />
                     <Input placeholder="Пароль" name="password" type="password" value={formData.password} onChange={handleChange} />
-                    <Button type="submit" className="w-full">Зарегистрироваться</Button>
+                    <Button className="w-full">Зарегистрироваться</Button>
                   </form>
                 </>
               )}
