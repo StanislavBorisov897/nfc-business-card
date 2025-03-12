@@ -1,4 +1,5 @@
 import NextAuth from "next-auth";
+<<<<<<< HEAD
 import GoogleProvider from "next-auth/providers/google";
 import { NextAuthOptions } from "next-auth";
 
@@ -24,3 +25,14 @@ export const authOptions: NextAuthOptions = {
 };
 
 export default NextAuth(authOptions);
+=======
+
+declare module "next-auth" {
+  interface Session {
+    accessToken?: string;
+  }
+  interface Token {
+    accessToken?: string;
+  }
+}
+>>>>>>> bb10e9a (Fix type error by extending Session and Token types)
