@@ -10,6 +10,7 @@ import Image from "next/image";
 interface FormData {
   name: string;
   email: string;
+  password: string;
   phone: string;
   link: string;
   avatar: string | null;
@@ -24,6 +25,7 @@ export default function NFCBusinessCard() {
   const [formData, setFormData] = useState<FormData>({
     name: "",
     email: "",
+    password: "",
     phone: "",
     link: "",
     avatar: null,
@@ -59,7 +61,7 @@ export default function NFCBusinessCard() {
   }, []);
 
   const validateForm = useCallback(() => {
-    if (!formData.name || !formData.email || !formData.phone || !formData.link) {
+    if (!formData.name || !formData.email || !formData.password || !formData.phone || !formData.link) {
       setError("Все поля должны быть заполнены");
       return false;
     }
@@ -94,7 +96,14 @@ export default function NFCBusinessCard() {
                 <Button onClick={() => signOut()} className="w-full">Выйти</Button>
               </>
             ) : (
-              <Button onClick={() => signIn("google")} className="w-full">Войти через Google</Button>
+              <>
+                <Button onClick={() => signIn("google")} className="w-full">Войти через Google</Button>
+                <form>
+                  <Input placeholder="Email" name="email" value={formData.email} onChange={handleChange} required />
+                  <Input placeholder="Пароль" name="password" type="password" value={formData.password} onChange={handleChange} required />
+                  <Button type="submit" className="w-full">Зарегистрироваться</Button>
+                </form>
+              </>
             )}
             {status === "authenticated" && (
               <>
@@ -114,7 +123,6 @@ export default function NFCBusinessCard() {
                   />
                 </div>
                 <Input placeholder="Имя" name="name" value={formData.name} onChange={handleChange} />
-                <Input placeholder="Email" name="email" value={formData.email} onChange={handleChange} disabled />
                 <Input placeholder="Телефон" name="phone" value={formData.phone} onChange={handleChange} />
                 <Input placeholder="Сайт или соцсеть" name="link" value={formData.link} onChange={handleChange} />
                 {error && <p className="text-red-500 text-center">{error}</p>}
