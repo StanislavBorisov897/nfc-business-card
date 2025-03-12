@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import transporter from '../config/email';
 
 const authService = {
@@ -38,3 +39,38 @@ const authService = {
 };
 
 export default authService;
+=======
+import transporter from '../config/email'; 
+const authService = { 
+  register: async (username, password) =
+    const response = await fetch('/api/auth/register', { 
+      method: 'POST', 
+      headers: { 
+        'Content-Type': 'application/json', 
+      }, 
+      body: JSON.stringify({ username, password }), 
+    }); 
+    if (!response.ok) { 
+      throw new Error('Registration failed'); 
+    } 
+    await transporter.sendMail({ 
+      to: username, 
+      subject: 'Регистрация успешна', 
+      text: 'Вы успешно зарегистрировались в NFC Business Card. Добро пожаловать!', 
+    }); 
+  }, 
+  login: async (username, password) =
+    const response = await fetch('/api/auth/login', { 
+      method: 'POST', 
+      headers: { 
+        'Content-Type': 'application/json', 
+      }, 
+      body: JSON.stringify({ username, password }), 
+    }); 
+    if (!response.ok) { 
+      throw new Error('Invalid login credentials'); 
+    } 
+  }, 
+}; 
+export default authService; 
+>>>>>>> 76928c06c9f95d46aa99e68b802dce8bf884c85d
