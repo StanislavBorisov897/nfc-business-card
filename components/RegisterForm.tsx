@@ -10,11 +10,13 @@ const RegisterForm: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    console.log('Form submitted');
     try {
       await authService.register(username, password);
       alert('Registration successful. Please check your email for confirmation.');
       router.push('/login');
     } catch (err) {
+      console.error('Registration error:', err);
       setError('Registration failed');
     }
   };
