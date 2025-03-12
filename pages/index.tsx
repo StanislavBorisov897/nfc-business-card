@@ -92,12 +92,13 @@ export default function NFCBusinessCard() {
         <title>NFC Визитка</title>
         <meta name="description" content="Создайте цифровую NFC-визитку с уникальной ссылкой" />
       </Head>
-      <div className="flex flex-col items-center justify-center min-h-screen p-4 bg-gray-100">
+      <div
+        className="flex flex-col items-center justify-center min-h-screen p-4 bg-cover bg-center"
+        style={{ backgroundImage: 'url("https://779777.ru/")' }}
+      >
+        <h1 className="text-white text-5xl font-bold mb-8 text-center mt-8">Создание NFC-визитки</h1>
         <Card className="w-full max-w-md shadow-lg rounded-lg bg-white">
           <CardContent className="space-y-4 p-4">
-            <h2 className="text-xl font-semibold text-center">
-              {status === "authenticated" ? "Личный кабинет" : "Создание NFC-визитки"}
-            </h2>
             {status === "authenticated" ? (
               <>
                 <p className="text-center">Вы вошли как {formData.email}</p>
