@@ -1,15 +1,4 @@
-.text-black {
-  color: black;
-}
-
-.text-white {
-  color: white;
-}
-
-.bg-white {
-  background-color: white;
-}
-
-.bg-black {
-  background-color: black;
+/* Убедитесь, что этот файл существует и подключен к проекту */
+body {
+  color: black; /* Сделать все текстовые элементы черными */
 }

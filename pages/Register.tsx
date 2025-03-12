@@ -1,10 +1,9 @@
 import React from 'react';
 import Head from 'next/head';
-import '../styles/styles.css'; // Подключите файл стилей
 
 const RegisterPage: React.FC = () => {
   return (
-    <div className="bg-black min-h-screen flex items-center justify-center">
+    <div className="bg-white min-h-screen flex items-center justify-center">
       <Head>
         <title>Регистрация</title>
       </Head>
