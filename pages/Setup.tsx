@@ -1,21 +1,20 @@
-<<<<<<< HEAD
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const Setup: React.FC = () => {
+  const navigate = useNavigate();
+
+  const handleSetupComplete = () => {
+    alert('Setup complete');
+    navigate('/');
+  };
+
   return (
     <div>
-      <h1>Настройка визиток</h1>
-      {/* Здесь будет логика для настройки визиток */}
+      <h1>Setup Page</h1>
+      <button onClick={handleSetupComplete}>Complete Setup</button>
     </div>
   );
 };
 
 export default Setup;
-=======
-import React from 'react'; 
-const Setup = () =
-  return ( 
-  ); 
-}; 
-export default Setup; 
->>>>>>> 76928c06c9f95d46aa99e68b802dce8bf884c85d
