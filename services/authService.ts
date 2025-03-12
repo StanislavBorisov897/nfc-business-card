@@ -1,17 +1,33 @@
-const authService = {
-  login: async (username: string, password: string) => {
-    // Replace this with your actual authentication logic
-    if (username === 'admin' && password === 'password') {
-      return Promise.resolve();
-    } else {
-      return Promise.reject();
-    }
-  },
-  register: async (username: string, password: string) => {
-    // Replace this with your actual registration logic
-    // For now, we just resolve the promise to simulate a successful registration
-    return Promise.resolve();
-  }
-};
-
-export default authService;
+import transporter from '../config/email'; 
+const authService = { 
+  register: async (username, password) =
+    const response = await fetch('/api/auth/register', { 
+      method: 'POST', 
+      headers: { 
+        'Content-Type': 'application/json', 
+      }, 
+      body: JSON.stringify({ username, password }), 
+    }); 
+    if (!response.ok) { 
+      throw new Error('Registration failed'); 
+    } 
+    await transporter.sendMail({ 
+      to: username, 
+      subject: 'Регистрация успешна', 
+      text: 'Вы успешно зарегистрировались в NFC Business Card. Добро пожаловать!', 
+    }); 
+  }, 
+  login: async (username, password) =
+    const response = await fetch('/api/auth/login', { 
+      method: 'POST', 
+      headers: { 
+        'Content-Type': 'application/json', 
+      }, 
+      body: JSON.stringify({ username, password }), 
+    }); 
+    if (!response.ok) { 
+      throw new Error('Invalid login credentials'); 
+    } 
+  }, 
+}; 
+export default authService; 
