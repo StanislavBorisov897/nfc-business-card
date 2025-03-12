@@ -1,0 +1,3 @@
+[submodule "nfc-business-card"]
+    path = nfc-business-card
+    url = https://github.com/StanislavBorisov897/nfc-business-card.git
