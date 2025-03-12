@@ -12,8 +12,8 @@ const RegisterForm: React.FC = () => {
     e.preventDefault();
     try {
       await authService.register(username, password);
-      alert('Registration successful');
-      navigate('/setup');  // Перенаправление на страницу настройки визиток
+      alert('Registration successful. Please check your email for confirmation.');
+      navigate('/login');
     } catch (err) {
       setError('Registration failed');
     }
