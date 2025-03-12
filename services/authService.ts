@@ -1,8 +1,5 @@
-import transporter from '../config/email';
-
 const authService = {
   register: async (username: string, password: string) => {
-    console.log('Starting registration process');
     const response = await fetch('/api/auth/register', {
       method: 'POST',
       headers: {
@@ -12,18 +9,9 @@ const authService = {
     });
 
     if (!response.ok) {
-      console.error('Registration request failed', response.status, response.statusText);
-      throw new Error('Registration failed');
+      const errorData = await response.json();
+      throw new Error(errorData.message || 'Registration failed');
     }
-
-    console.log('Registration request successful, sending confirmation email');
-    await transporter.sendMail({
-      from: '"NFC Business Card" <stanislav888888888888@gmail.com>',
-      to: username,
-      subject: 'Регистрация успешна',
-      text: 'Вы успешно зарегистрировались в NFC Business Card. Добро пожаловать!',
-    });
-    console.log('Confirmation email sent');
   },
 
   login: async (username: string, password: string) => {
