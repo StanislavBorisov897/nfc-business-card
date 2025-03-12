@@ -6,6 +6,7 @@ import { Button } from "../components/ui/button";
 import { useRouter } from "next/router";
 import { signIn, signOut, useSession } from "next-auth/react";
 import Image from "next/image";
+import authService from '../services/authService'; // Импортируем authService
 
 interface FormData {
   name: string;
@@ -78,9 +79,16 @@ export default function NFCBusinessCard() {
     setLoading(false);
   }, [validateForm]);
 
-  const handleRegister = useCallback(() => {
-    console.log('Зарегистрироваться');
-  }, []);
+  const handleRegister = useCallback(async () => {
+    if (!validateForm()) return;
+
+    try {
+      await authService.register(formData.email, formData.password);
+      router.push('/profile'); // Перенаправление на страницу профиля после регистрации
+    } catch (error) {
+      setError('Ошибка регистрации');
+    }
+  }, [formData, validateForm, router]);
 
   const navigateToLogin = () => {
     router.push('/login');
@@ -109,10 +117,10 @@ export default function NFCBusinessCard() {
                 <>
                   <Button onClick={() => signIn("google")} className="w-full">Войти через Google</Button>
                   <Button onClick={navigateToLogin} className="w-full">Войти</Button>
-                  <form>
+                  <form onSubmit={(e) => { e.preventDefault(); handleRegister(); }}>
                     <Input placeholder="Email" name="email" value={formData.email} onChange={handleChange} />
                     <Input placeholder="Пароль" name="password" type="password" value={formData.password} onChange={handleChange} />
-                    <Button onClick={handleRegister} className="w-full">Зарегистрироваться</Button>
+                    <Button type="submit" className="w-full">Зарегистрироваться</Button>
                   </form>
                 </>
               )}
