@@ -96,7 +96,7 @@ export default function NFCBusinessCard() {
         className="flex flex-col items-center justify-center min-h-screen p-4 bg-cover bg-center"
         style={{ backgroundImage: 'url("https://779777.ru/")' }}
       >
-        <h1 className="text-white text-5xl font-bold mb-8 text-center mt-8">Создание NFC-визитки</h1>
+        <h1 className="text-black text-5xl font-bold mb-8 text-center mt-8">Создание NFC-визитки</h1>
         <div className="flex flex-col items-center justify-center flex-grow">
           <Card className="w-full max-w-md shadow-lg rounded-lg bg-white">
             <CardContent className="space-y-4 p-4">
