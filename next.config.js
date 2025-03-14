@@ -2,7 +2,7 @@
 const nextConfig = {
   reactStrictMode: true,
   images: {
-    domains: ['yourdomain.com'], // Замените 'yourdomain.com' на ваш домен
+    domains: ['779777.ru'], 
   },
   // Другие настройки Next.js могут быть добавлены здесь
 }
