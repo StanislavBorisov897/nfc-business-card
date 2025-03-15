@@ -1,19 +1,19 @@
 import React, { useState } from 'react';
-import { useRouter } from 'next/router';
+import { useHistory } from 'react-router-dom';
 import authService from '../services/authService';
 
 const LoginForm: React.FC = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-  const router = useRouter();
+  const history = useHistory();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
       await authService.login(username, password);
       alert('Login successful');
-      router.push('/setup');
+      history.push('/setup');
     } catch (err) {
       setError('Invalid login credentials');
     }

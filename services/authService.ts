@@ -1,32 +1,36 @@
+import axios from 'axios';
+
+const API_URL = '/api/auth/';
+
+const register = (username: string, password: string) => {
+  return axios.post(API_URL + 'register', {
+    username,
+    password,
+  });
+};
+
+const login = (username: string, password: string) => {
+  return axios
+    .post(API_URL + 'login', {
+      username,
+      password,
+    })
+    .then((response) => {
+      if (response.data.token) {
+        localStorage.setItem('user', JSON.stringify(response.data));
+      }
+      return response.data;
+    });
+};
+
+const logout = () => {
+  localStorage.removeItem('user');
+};
+
 const authService = {
-  register: async (username: string, password: string) => {
-    const response = await fetch('/api/auth/register', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ username, password }),
-    });
-
-    if (!response.ok) {
-      const errorData = await response.json();
-      throw new Error(errorData.message || 'Registration failed');
-    }
-  },
-
-  login: async (username: string, password: string) => {
-    const response = await fetch('/api/auth/login', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ username, password }),
-    });
-
-    if (!response.ok) {
-      throw new Error('Invalid login credentials');
-    }
-  },
+  register,
+  login,
+  logout,
 };
 
 export default authService;

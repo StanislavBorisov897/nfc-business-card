@@ -1,22 +1,20 @@
 import React, { useState } from 'react';
-import { useRouter } from 'next/router';
+import { useHistory } from 'react-router-dom';
 import authService from '../services/authService';
 
 const RegisterForm: React.FC = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-  const router = useRouter();
+  const history = useHistory();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Form submitted');
     try {
       await authService.register(username, password);
       alert('Registration successful. Please check your email for confirmation.');
-      router.push('/login');
+      history.push('/login');
     } catch (err) {
-      console.error('Registration error:', err);
       setError('Registration failed');
     }
   };
@@ -46,17 +44,6 @@ const RegisterForm: React.FC = () => {
       {error && <p>{error}</p>}
       <button type="submit" className="btn">Register</button>
       <style jsx>{`
-        body {
-          font-family: Arial, sans-serif;
-          font-size: 16px;
-          color: #000;
-          background-color: #f8f8f8;
-        }
-
-        * {
-          box-sizing: border-box;
-        }
-
         .form {
           max-width: 320px;
           padding: 15px;
@@ -70,8 +57,6 @@ const RegisterForm: React.FC = () => {
           padding: 8px 10px;
           margin-bottom: 10px;
           border: 1px solid #ccc;
-          font-family: inherit;
-          font-size: 16px;
         }
 
         .btn {
@@ -81,8 +66,6 @@ const RegisterForm: React.FC = () => {
           border: 0;
           background-color: #1cbc11;
           cursor: pointer;
-          font-family: inherit;
-          font-size: 16px;
           color: #fff;
         }
 

@@ -1,7 +1,12 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
+import bcrypt from 'bcrypt';
+import User from '../../../models/User';
+import dbConnect from '../../../utils/dbConnect';
 import nodemailer from 'nodemailer';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+  await dbConnect();
+
   if (req.method !== 'POST') {
     return res.status(405).json({ message: 'Method not allowed' });
   }
@@ -12,28 +17,28 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     return res.status(400).json({ message: 'Username and password are required' });
   }
 
-  // Здесь вы можете добавить логику для сохранения данных пользователя в базу данных
-
-  // Создаем транспортер для отправки почты
-  const transporter = nodemailer.createTransport({
-    service: 'gmail',
-    auth: {
-      user: process.env.EMAIL_USER, // Убедитесь, что эти переменные окружения настроены
-      pass: process.env.EMAIL_PASS,
-    },
-  });
-
   try {
-    await transporter.sendMail({
-      from: '"NFC Business Card" <stanislav888888888888@gmail.com>',
-      to: username,
-      subject: 'Регистрация успешна',
-      text: 'Вы успешно зарегистрировались в NFC Business Card. Добро пожаловать!',
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const newUser = new User({ username, password: hashedPassword });
+    await newUser.save();
+
+    const transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS,
+      },
     });
 
-    res.status(200).json({ message: 'Registration successful. Confirmation email sent.' });
+    await transporter.sendMail({
+      from: '"NFC Business Card" <no-reply@nfcbusinesscard.com>',
+      to: username,
+      subject: 'Registration Successful',
+      text: 'You have successfully registered at NFC Business Card. Welcome!',
+    });
+
+    res.status(201).json({ message: 'User registered successfully. Confirmation email sent.' });
   } catch (error) {
-    console.error('Error sending email:', error);
-    res.status(500).json({ message: 'Error sending confirmation email' });
+    res.status(500).json({ message: 'Registration failed', error: error.message });
   }
 }
